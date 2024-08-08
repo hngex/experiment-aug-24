@@ -1,0 +1,156 @@
+name: warp
+
+services:
+  # ---------------------------------------------------------------------------
+  msa1:
+    hostname: msa1
+    build: ./containers/msa
+    ports:
+      - "5871:587"
+    volumes:
+      - q1socks:/var/spool/postfix/public
+      - /etc/localtime:/etc/localtime:ro
+      - ./logs/msa1.log:/var/log/postfix.log
+    networks:
+      mailnet:
+        aliases:
+          - msa1.local
+    # extra_hosts:
+    #   - "mx1.local:133.125.70.228"
+  msa2:
+    hostname: msa2
+    build: ./containers/msa
+    ports:
+      - "5872:587"
+    volumes:
+      - q2socks:/var/spool/postfix/public
+      - /etc/localtime:/etc/localtime:ro
+      - ./logs/msa2.log:/var/log/postfix.log
+    networks:
+      mailnet:
+        aliases:
+          - msa2.local
+    # extra_hosts:
+    #   - "mx2.local:133.125.70.229"
+  msa3:
+    hostname: msa3
+    build: ./containers/msa
+    ports:
+      - "5873:587"
+    volumes:
+      - q3socks:/var/spool/postfix/public
+      - /etc/localtime:/etc/localtime:ro
+      - ./logs/msa3.log:/var/log/postfix.log
+    networks:
+      mailnet:
+        aliases:
+          - msa3.local
+    # extra_hosts:
+    #   - "mx3.local:133.125.70.230"
+
+  # ---------------------------------------------------------------------------
+  mx1:
+    hostname: mx1
+    build: ./containers/mx
+    # ports:
+    #- "133.125.70.228:25:25"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./logs/mx1.log:/var/log/postfix.log
+    networks:
+      mailnet:
+        aliases:
+          - mx1.local
+  mx2:
+    hostname: mx2
+    build: ./containers/mx
+    # ports:
+    #- "133.125.70.229:25:25"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./logs/mx2.log:/var/log/postfix.log
+    networks:
+      mailnet:
+        aliases:
+          - mx2.local
+  mx3:
+    hostname: mx3
+    build: ./containers/tarpit
+    # ports:
+    #- "133.125.70.230:25:25"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./logs/mx3.log:/var/log/mxtarpit.log
+    networks:
+      mailnet:
+        aliases:
+          - mx3.local
+
+  # ---------------------------------------------------------------------------
+  msa1ex:
+    hostname: msa1ex
+    build: ./containers/exporter
+    ports:
+      - "9151:9154"
+    volumes:
+      - q1socks:/var/spool/postfix/public
+      - /etc/localtime:/etc/localtime:ro
+      - ./logs/msa1.log:/var/log/postfix.log
+  msa2ex:
+    hostname: msa2ex
+    build: ./containers/exporter
+    ports:
+      - "9152:9154"
+    volumes:
+      - q2socks:/var/spool/postfix/public
+      - /etc/localtime:/etc/localtime:ro
+      - ./logs/msa2.log:/var/log/postfix.log
+  msa3ex:
+    hostname: msa3ex
+    build: ./containers/exporter
+    ports:
+      - "9153:9154"
+    volumes:
+      - q3socks:/var/spool/postfix/public
+      - /etc/localtime:/etc/localtime:ro
+      - ./logs/msa3.log:/var/log/postfix.log
+
+  # ---------------------------------------------------------------------------
+  mx1ex:
+    hostname: mx1ex
+    build: ./containers/exporter
+    ports:
+      - "9161:9154"
+    volumes:
+      - m1socks:/var/spool/postfix/public
+      - /etc/localtime:/etc/localtime:ro
+      - ./logs/mx1.log:/var/log/postfix.log
+  mx2ex:
+    hostname: mx2ex
+    build: ./containers/exporter
+    ports:
+      - "9162:9154"
+    volumes:
+      - m2socks:/var/spool/postfix/public
+      - /etc/localtime:/etc/localtime:ro
+      - ./logs/mx2.log:/var/log/postfix.log
+  mx3ex:
+    hostname: mx1ex
+    build: ./containers/exporter
+    ports:
+      - "9163:9154"
+    volumes:
+      - m1socks:/var/spool/postfix/public
+      - /etc/localtime:/etc/localtime:ro
+      - ./logs/mx3.log:/var/log/postfix.log
+
+networks:
+  mailnet:
+
+volumes:
+  q1socks:
+  q2socks:
+  q3socks:
+  m1socks:
+  m2socks:
+  m3socks:
