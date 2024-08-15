@@ -47,9 +47,9 @@ services:
     hostname: mx1
     build: ./containers/mx
     environment:
-      - MYDOMAIN=${MX1DOMAIN}
+      - MYDOMAIN=${MX1DOMAIN:-mx1.local}
     ports:
-      - "${MX1IP:-}:25:25"
+      - "${MX1IPPORT:-}:25"
     volumes:
       - m1socks:/var/spool/postfix/public
       - /etc/localtime:/etc/localtime:ro
@@ -62,9 +62,9 @@ services:
     hostname: mx2
     build: ./containers/mx
     environment:
-      - MYDOMAIN=${MX2DOMAIN}
+      - MYDOMAIN=${MX2DOMAIN:-mx2.local}
     ports:
-      - "${MX2IP:-}:25:25"
+      - "${MX2IPPORT:-}:25"
     volumes:
       - m2socks:/var/spool/postfix/public
       - /etc/localtime:/etc/localtime:ro
@@ -77,9 +77,9 @@ services:
     hostname: mx3
     build: ./containers/tarpit
     environment:
-      - MYDOMAIN=${MX3DOMAIN}
+      - MYDOMAIN=${MX3DOMAIN:-mx3.local}
     ports:
-      - "${MX3IP:-}:25:25"
+      - "${MX3IPPORT:-}:25"
     volumes:
       - m3socks:/var/spool/postfix/public
       - /etc/localtime:/etc/localtime:ro

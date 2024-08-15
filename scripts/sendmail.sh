@@ -28,8 +28,12 @@ send () {
   #} | openssl s_client -quiet -starttls smtp -crlf -connect $SMTP_SERVER:$SMTP_PORT -ign_eof
 }
 
-send "5871" "alice@msa1.local" "bob@ex228.warpmail.dev" &
-send "5872" "carol@msa2.local" "bob@ex229.warpmail.dev" &
-send "5873" "mallory@msa3.local" "bob@ex230.warpmail.dev" &
+#send "5871" "alice@msa1.local" "bob@ex228.warpmail.dev" &
+#send "5872" "carol@msa2.local" "bob@ex229.warpmail.dev" &
+#send "5873" "mallory@msa3.local" "bob@ex230.warpmail.dev" &
+
+send "5871" "alice@msa1.local" "bob@mx1.local" &
+send "5872" "carol@msa2.local" "bob@mx2.local" &
+send "5873" "mallory@msa3.local" "bob@mx3.local" &
 
 echo
