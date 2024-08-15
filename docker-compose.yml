@@ -15,8 +15,6 @@ services:
       mailnet:
         aliases:
           - msa1.local
-    # extra_hosts:
-    #   - "mx1.local:133.125.70.228"
   msa2:
     hostname: msa2
     build: ./containers/msa
@@ -30,8 +28,6 @@ services:
       mailnet:
         aliases:
           - msa2.local
-    # extra_hosts:
-    #   - "mx2.local:133.125.70.229"
   msa3:
     hostname: msa3
     build: ./containers/msa
@@ -45,8 +41,6 @@ services:
       mailnet:
         aliases:
           - msa3.local
-    # extra_hosts:
-    #   - "mx3.local:133.125.70.230"
 
   # ---------------------------------------------------------------------------
   mx1:
