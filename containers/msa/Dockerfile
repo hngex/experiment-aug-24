@@ -7,6 +7,7 @@ RUN apt-get -y update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+COPY master.cf /etc/postfix/master.cf
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
