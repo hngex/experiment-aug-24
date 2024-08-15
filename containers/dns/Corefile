@@ -1,0 +1,21 @@
+mail1.example.com {
+    file /etc/coredns/db.mail1.example.com
+    log
+}
+
+mail2.example.com {
+    file /etc/coredns/db.mail2.example.com
+    log
+}
+
+mail3.example.com {
+    file /etc/coredns/db.mail3.example.com
+    log
+}
+
+. {
+    whoami
+    forward . 8.8.8.8 9.9.9.9
+    errors
+    log . "{proto} {remote} is Request: {name} {type} {>id}"
+}
