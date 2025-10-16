@@ -1,4 +1,4 @@
-Experiment of August 2024
+Experiment
 ==
 
 This environment is for an experiment to evaluate the performance of Warp, a transparent SMTP proxy.
